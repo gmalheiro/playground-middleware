@@ -1,4 +1,5 @@
-module github.com/gmalheiro/playground-middleware
+module github.com/gmalheiro/playground-golang-clean-arch
+
 
 go 1.24.1
 

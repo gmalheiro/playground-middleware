@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/gmalheiro/playground-middleware/configs"
+	"github.com/gmalheiro/playground-golang-clean-arch/configs"
 	"github.com/golang-jwt/jwt/v5"
 )
 

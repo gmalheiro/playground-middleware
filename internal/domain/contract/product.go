@@ -1,6 +1,6 @@
 package contract
 
-import "github.com/gmalheiro/playground-middleware/internal/domain/entity"
+import "github.com/gmalheiro/playground-golang-clean-arch/internal/domain/entity"
 
 type ProductRepository interface {
 	GetAll() ([]entity.Product, error)

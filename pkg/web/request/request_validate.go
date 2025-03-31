@@ -3,7 +3,7 @@ package request
 import (
 	"errors"
 
-	"github.com/gmalheiro/playground-middleware/pkg/web/response"
+	"github.com/gmalheiro/playground-golang-clean-arch/pkg/web/response"
 	"github.com/go-playground/validator/v10"
 )
 

@@ -3,8 +3,8 @@ package middlewares
 import (
 	"net/http"
 
-	"github.com/gmalheiro/playground-middleware/internal/auth"
-	"github.com/gmalheiro/playground-middleware/pkg/web/response"
+	"github.com/gmalheiro/playground-golang-clean-arch/internal/auth"
+	"github.com/gmalheiro/playground-golang-clean-arch/pkg/web/response"
 )
 
 func Authorization(next http.Handler) http.Handler {
