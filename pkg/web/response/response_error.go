@@ -29,11 +29,31 @@ func (r *Response) MessageErr(message string) *Response {
 	return r
 }
 
+func (r *Response) BadErr(message string) *Response {
+	if r != nil {
+		r.err = &HttpResponse{
+			StatusCode: http.StatusBadRequest,
+			Message:    message,
+		}
+	}
+	return r
+}
+
 func (r *Response) UnauthorizedErr(message string) *Response {
 	if r != nil {
 		r.err = &HttpResponse{
 			StatusCode: http.StatusUnauthorized,
 			Message:    message,
+		}
+	}
+	return r
+}
+
+func (r *Response) UnprocessableErr(validation []Validation) *Response {
+	if r != nil {
+		r.err = &HttpResponse{
+			StatusCode: http.StatusUnprocessableEntity,
+			Validate:   validation,
 		}
 	}
 	return r
