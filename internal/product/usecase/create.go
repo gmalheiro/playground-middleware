@@ -7,7 +7,6 @@ import (
 	"github.com/gmalheiro/playground-golang-clean-arch/internal/domain/entity"
 	"github.com/gmalheiro/playground-golang-clean-arch/internal/product/converter"
 	"github.com/gmalheiro/playground-golang-clean-arch/internal/product/dto"
-	product_error "github.com/gmalheiro/playground-golang-clean-arch/internal/product/error"
 	"github.com/gmalheiro/playground-golang-clean-arch/pkg/rest_err"
 )
 
@@ -22,19 +21,19 @@ func NewCreateProductUseCase(repository contract.ProductRepository) *CreateProdu
 }
 
 func (puc *CreateProductUseCase) Execute(input dto.CreateProductDto) (*dto.ProductOutputDto, *rest_err.RestErr) {
-	product, err := puc.ProductRepository.GetByCodeValue(input.CodeValue)
-	if err != nil {
-		return nil, rest_err.NewInternalError(err.Error())
-	}
-	if product != nil {
-		return nil, rest_err.NewConflict(product_error.ErrConflictProductCodeValueAlreadyExist)
-	}
+	// product, err := puc.ProductRepository.GetByCodeValue(input.CodeValue)
+	// if err != nil {
+	// 	return nil, rest_err.NewInternalError(err.Error())
+	// }
+	// if product != nil {
+	// 	return nil, rest_err.NewConflict(product_error.ErrConflictProductCodeValueAlreadyExist)
+	// }
 	parsedDate, err := parseDate(input.Expiration)
 	if err != nil {
 		return nil, rest_err.NewInternalError(err.Error())
 	}
 	productEntity := entity.NewProduct(input.Name, input.Quantity, input.CodeValue, input.IsPublished, parsedDate, input.Price)
-	product, err = puc.ProductRepository.Create(*productEntity)
+	product, err := puc.ProductRepository.Create(*productEntity)
 	if err != nil {
 		return nil, rest_err.NewInternalError(err.Error())
 	}
