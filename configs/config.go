@@ -28,7 +28,7 @@ func loadConfig(path string) {
 	}
 }
 
-func getEnv(key, fallback string) string {
+func GetEnv(key, fallback string) string {
 	if value, exists := os.LookupEnv(key); exists {
 		return value
 	}
@@ -40,7 +40,7 @@ func NewConfig(path string) *Config {
 
 	defaultConfig := &Config{
 		Server: &ServerConfig{
-			Port: getEnv("PORT", "8080"),
+			Port: GetEnv("PORT", "8080"),
 		},
 	}
 
