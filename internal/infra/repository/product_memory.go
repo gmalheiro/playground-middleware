@@ -23,3 +23,9 @@ func NewProductMemoryRepository() *ProductMemoryRepository {
 		codeValueSet: products.Set,
 	}
 }
+
+func (p *ProductMemoryRepository) Create(product entity.Product) (*entity.Product, error) {
+	product.ID = len(p.products) + 1
+	p.products[product.ID] = &product
+	return &product, nil
+}
