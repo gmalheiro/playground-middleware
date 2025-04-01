@@ -11,7 +11,7 @@ import (
 )
 
 type StorageObj struct {
-	Products map[int]entity.Product
+	Products map[int]*entity.Product
 	Set      map[string]bool
 }
 
@@ -52,7 +52,7 @@ func Read(path string) (StorageObj, error) {
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	var products = make(map[int]entity.Product)
+	var products = make(map[int]*entity.Product)
 	var set = make(map[string]bool)
 	for _, tempProduct := range tempProducts {
 		date := stringToDate(tempProduct.Expiration)
@@ -65,7 +65,7 @@ func Read(path string) (StorageObj, error) {
 			Expiration:  date,
 			Price:       tempProduct.Price,
 		}
-		products[tempProduct.ID] = product
+		products[tempProduct.ID] = &product
 		set[tempProduct.CodeValue] = true
 	}
 	stObj := StorageObj{Products: products, Set: set}
