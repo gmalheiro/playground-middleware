@@ -40,7 +40,8 @@ func NewConfig(path string) *Config {
 
 	defaultConfig := &Config{
 		Server: &ServerConfig{
-			Port: GetEnv("PORT", "8080"),
+			Port:  GetEnv("PORT", "8080"),
+			Token: GetEnv("TOKEN", ""),
 		},
 	}
 
