@@ -1,6 +1,8 @@
 package http
 
 import (
+	"fmt"
+	"net/http"
 	"time"
 
 	"github.com/go-chi/chi/v5"
@@ -34,4 +36,25 @@ func (hs *HttpServer) SetupDefault() *HttpServer {
 	)
 
 	return hs
+}
+
+func (hs *HttpServer) RegisterController(controller Controller) {
+	hs.Controllers = append(hs.Controllers, controller)
+}
+
+func (hs *HttpServer) loadControllers() {
+	hs.Router.Route("/api", func(r chi.Router) {
+		for _, controller := range hs.Controllers {
+			controller.RegisterRoutes(r)
+		}
+	})
+}
+
+func (hs *HttpServer) Run() {
+	hs.loadControllers()
+	serverPort := fmt.Sprintf(":%s", hs.ServerPort)
+
+	if err := http.ListenAndServe(serverPort, hs.Router); err != nil {
+		panic(err)
+	}
 }
