@@ -42,6 +42,10 @@ func (puc *CreateProductUseCase) Execute(input dto.CreateProductDto) (*dto.Produ
 }
 
 func parseDate(dateStr string) (time.Time, error) {
-	layout := "02-01-2006"
-	return time.Parse(layout, dateStr)
+	layout := "02/01/2006"
+	parsedTime, err := time.Parse(layout, dateStr)
+	if err != nil {
+		return time.Time{}, err
+	}
+	return parsedTime, nil
 }

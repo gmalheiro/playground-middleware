@@ -20,5 +20,5 @@ func ToDTO(input entity.Product) dto.ProductOutputDto {
 }
 
 func formatDate(t time.Time) string {
-	return t.Format("01-02-2006")
+	return t.Format("01/02/2006")
 }
