@@ -34,8 +34,8 @@ func (ph *ProductHandler) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	createProduct := usecase.NewCreateProductUseCase(ph.ProductRepository)
-	output, resterr := createProduct.Execute(input)
 
+	output, resterr := createProduct.Execute(input)
 	if resterr != nil {
 		response.To(w).Status(resterr.StatusCode).MessageErr(resterr.Message).SendJSON()
 		return
