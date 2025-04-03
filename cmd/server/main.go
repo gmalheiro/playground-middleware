@@ -11,7 +11,7 @@ import (
 func main() {
 	cfg := configs.NewConfig(".env.development")
 
-	hs := http.NewHttpServer(cfg.Server.Port)
+	hs := http.NewHttpServer(cfg.Server.Port).SetupDefault()
 	productRepository := repository.NewProductMemoryRepository()
 
 	productHandler := handler.NewProductHandler(productRepository)

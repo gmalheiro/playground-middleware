@@ -5,8 +5,10 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/gmalheiro/playground-golang-clean-arch/configs"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
 type Controller interface {
@@ -34,6 +36,11 @@ func (hs *HttpServer) SetupDefault() *HttpServer {
 		middleware.Timeout(5*time.Second),
 		middleware.Heartbeat("/ping"),
 	)
+	docsDir := configs.GetEnv("DOCS_DIR", "./docs")
+	hs.Router.Get("/swagger/*", httpSwagger.Handler(
+		httpSwagger.URL("/swagger/swagger.json"),
+	))
+	hs.Router.Get("/swagger/swagger.json", http.StripPrefix("/swagger", http.FileServer(http.Dir(docsDir))).ServeHTTP)
 
 	return hs
 }
