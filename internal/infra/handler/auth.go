@@ -25,7 +25,7 @@ func NewAuthHandler(authService contract.AuthService) *AuthHandler {
 // @Accept  json
 // @Produce  json
 // @Param auth body dto.AuthDto true "auth"
-// @Success 200 {object} dto.AuthResponseDto
+// @Success 200 {object} dto.AuthOutputDto
 // @Router /login [post]
 func (ah *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 	var input dto.AuthDto
@@ -38,4 +38,12 @@ func (ah *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 		response.To(w).UnprocessableErr(v).SendJSON()
 		return
 	}
+
+	output, resterr := ah.AuthService.Login(input)
+	if resterr != nil {
+		response.To(w).Status(resterr.StatusCode).MessageErr(resterr.Message).SendJSON()
+		return
+	}
+
+	response.To(w).Status(http.StatusOK).Content(output).SendJSON()
 }
