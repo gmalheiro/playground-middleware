@@ -3,6 +3,7 @@ package json_loader
 //TODO: Tightly coupled to product entity, refactor this later
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"os"
 	"time"
@@ -25,13 +26,13 @@ type tempProduct struct {
 	Price       float64
 }
 
-func jsonToInterface(path string) ([]tempProduct, error) {
+func jsonToInterface(path string) ([]*tempProduct, error) {
 	file, err := os.ReadFile(path)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failure to load json %s initializing empty list", path)
 	}
 
-	var products []tempProduct
+	var products []*tempProduct
 	if err = json.Unmarshal(file, &products); err != nil {
 		return nil, err
 	}
@@ -50,7 +51,11 @@ func stringToDate(productExpiration string) time.Time {
 func Read(path string) (StorageObj, error) {
 	tempProducts, err := jsonToInterface(path)
 	if err != nil {
-		log.Fatal(err.Error())
+		log.Print("failure to load json... initializing empty list")
+		return StorageObj{
+			Products: map[int]*entity.Product{},
+			Set:      map[string]bool{},
+		}, nil
 	}
 	var products = make(map[int]*entity.Product)
 	var set = make(map[string]bool)
