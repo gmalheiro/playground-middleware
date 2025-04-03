@@ -1,0 +1,71 @@
+basePath: /api/v1
+definitions:
+  dto.CreateProductDto:
+    properties:
+      code_value:
+        type: string
+      expiration:
+        type: string
+      is_published:
+        type: boolean
+      name:
+        type: string
+      price:
+        type: number
+      quantity:
+        type: integer
+    required:
+    - code_value
+    - expiration
+    - is_published
+    - name
+    - price
+    - quantity
+    type: object
+  entity.Product:
+    properties:
+      codeValue:
+        type: string
+      expiration:
+        type: string
+      id:
+        type: integer
+      isPublished:
+        type: boolean
+      name:
+        type: string
+      price:
+        type: number
+      quantity:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: This is a sample server.
+  termsOfService: http://swagger.io/terms/
+  title: products api
+  version: "1.0"
+paths:
+  /product:
+    post:
+      consumes:
+      - application/json
+      description: Create new product
+      parameters:
+      - description: product
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateProductDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Product'
+      tags:
+      - product
+swagger: "2.0"
