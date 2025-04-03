@@ -20,6 +20,14 @@ func NewProductHandler(repository contract.ProductRepository) *ProductHandler {
 	}
 }
 
+// Create RegisterRoutes @Summary Create new product
+// @Description Create new product
+// @Tags product
+// @Accept  json
+// @Produce  json
+// @Param product body dto.CreateProductDto true "product"
+// @Success 200 {object} entity.Product
+// @Router /product [post]
 func (ph *ProductHandler) Create(w http.ResponseWriter, r *http.Request) {
 	var input dto.CreateProductDto
 	v, err := request.From(r).ParseValidJSON(&input)
