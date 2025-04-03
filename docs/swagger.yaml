@@ -1,5 +1,18 @@
-basePath: /api/v1
 definitions:
+  dto.AuthDto:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    type: object
+  dto.AuthOutputDto:
+    properties:
+      token:
+        type: string
+    type: object
   dto.CreateProductDto:
     properties:
       code_value:
@@ -39,14 +52,30 @@ definitions:
       quantity:
         type: integer
     type: object
-host: localhost:8080
 info:
   contact: {}
-  description: This is a sample server.
-  termsOfService: http://swagger.io/terms/
-  title: products api
-  version: "1.0"
 paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Login user
+      parameters:
+      - description: auth
+        in: body
+        name: auth
+        required: true
+        schema:
+          $ref: '#/definitions/dto.AuthDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.AuthOutputDto'
+      tags:
+      - auth
   /product:
     post:
       consumes:
